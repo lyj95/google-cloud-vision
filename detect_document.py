@@ -4,15 +4,8 @@ import re
 from google.cloud import vision
 from google.cloud import storage
 import time
-import os
 
-f = open("KEY_PATH.txt", 'r')
-KEY_PATH = f.readline()
-f.close()
-
-# JSON KEY 환경변수 설정 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = KEY_PATH
-
+# gcs_source_uri의 파일을 읽어와서 텍스트 추출하여 gcs_destination_uri에 JSON형식으로 저장
 def async_detect_document(gcs_source_uri, gcs_destination_uri):
     # Supported mime_types are: 'application/pdf' and 'image/tiff'
     mime_type = 'application/pdf'
@@ -53,6 +46,7 @@ def async_detect_document(gcs_source_uri, gcs_destination_uri):
 
     print(time.time()-start)
 
+# gcs_destination_uri 파일을 읽어 첫번째 페이지를 콘솔에 출력
 def write_text_detection(gcs_destination_uri):
     # 저장된 파일 체크
     # Once the request has completed and the output has been
@@ -91,4 +85,4 @@ def write_text_detection(gcs_destination_uri):
     print(annotation['text'])
 
 # async_detect_document('gs://sample_document_ibricks/searchSystem.pdf', 'gs://test_result_ibricks/sample_result_')    
-async_detect_document('gs://sample_document_ibricks/us2010.pdf', 'gs://test_result_ibricks/us2010_result_')    
+async_detect_document('gs://test_gcv_bucket/us2010.pdf', 'gs://test_result_bucket/us2010_result_')    

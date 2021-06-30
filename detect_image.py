@@ -1,11 +1,3 @@
-import os
-
-f = open("KEY_PATH.txt", 'r')
-KEY_PATH = f.readline()
-f.close()
-# 환경변수 설정
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = KEY_PATH
-
 
 def detect_text(path):
     """Detects text in the file."""
